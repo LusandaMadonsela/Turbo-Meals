@@ -1,0 +1,234 @@
+﻿@model List<ShoppingCartMVC.Models.InvoiceVM>
+
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src=" https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" />
+    <title>Invoice</title>
+
+    <script>
+        function printInvoice() {
+            window.print();
+        }
+    </script>
+</head>
+
+<style>
+    @@media print {
+        .btn {
+            display: none;
+        }
+
+        .footer {
+            display: none;
+        }
+        .navbar{
+            display:none;
+        }
+    }
+</style>
+
+@{
+    double grandTotal = 0;
+    double finalTotal = 0;
+}
+
+@foreach (var item in Model)
+{
+    <div class="card">
+        <div class="card-body">
+            <div class="container mb-5 mt-3">
+                <div class="row d-flex align-items-baseline">
+                    <div class="col-xl-9">
+                        <p style="color: #7e8d9f;font-size: 20px;">Invoice >> <strong>ID: #  @Html.DisplayFor(modelItem => item.InvoiceID)</strong></p>
+                    </div>
+                    <div class="col-xl-3 float-end">
+                        <a class="btn btn-light text-capitalize border-0" data-mdb-ripple-color="dark" onclick="printInvoice();">
+                            <i class="fas fa-print text-primary"></i> Print
+                        </a>
+
+                    </div>
+                    <hr>
+
+                </div>
+
+
+
+                <div class="container">
+                    <img src="~/Images/LogoW2.jpg" width="240" height="100" />
+                    <br />
+                    <br />
+                    <div class="row">
+                        <div class="col-xl-8">
+                            <ul class="list-unstyled">
+                                <li class="text-muted">To: <span style="color:orangered ;"> @Html.DisplayFor(modelItem => item.Name) </span></li>
+                                <li class="text-muted">@Html.DisplayFor(modelItem => item.Address)</li>
+                                @*<li class="text-muted">State, Country</li>*@
+                                <li class="text-muted"><i class="fas fa-phone"></i> @Html.DisplayFor(modelItem => item.Contact)</li>
+                            </ul>
+                        </div>
+                        <div class="col-xl-4">
+                            <p class="text-muted">Invoice</p>
+                            <ul class="list-unstyled">
+                                <li class="text-muted">
+                                    <i class="fas fa-circle" style="color:orange ;"></i> <span class="fw-bold">ID:</span># @Html.DisplayFor(modelItem => item.InvoiceID)
+                                </li>
+                                <li class="text-muted">
+                                    <i class="fas fa-circle" style="color: orange; "></i> <span class="fw-bold">Method: </span>@Html.DisplayFor(modelItem => item.Method)
+                                </li>
+                                <li class="text-muted">
+                                    <i class="fas fa-circle" style="color: orange;"></i> <span class="fw-bold">Order Date: </span>@Html.DisplayFor(modelItem => item.InvoiceDate)
+                                </li>
+                                @if (Convert.ToString(item.CD_Time) == "1900/01/01 00:00:00")
+                                {
+                                    <li class="text-muted">
+                                        <i class="fas fa-circle" style="color:orange ;"></i> <span class="me-1 fw-bold">Payment Status:</span>
+                                        @if (item.Payment_Status == "Paid")
+                                        {
+                                            <span class="badge badge-success   text-black fw-bold">
+                                                Paid
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-warning   text-black fw-bold">
+                                                Pending
+                                            </span>
+                                        }
+                                    </li>
+                                }
+                                else
+                                {
+                                    if (item.Method == "Delivery")
+                                    {
+                                        <li class="text-muted">
+                                            <i class="fas fa-circle" style="color:orange ;"></i> <span class="fw-bold">Delivered: </span>@Html.DisplayFor(modelItem => item.CD_Time)
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="text-muted">
+                                            <i class="fas fa-circle" style="color:orange ;"></i> <span class="fw-bold">Collected: </span>@Html.DisplayFor(modelItem => item.CD_Time)
+                                        </li>
+                                    }
+
+
+
+                                    <li class="text-muted">
+                                        <i class="fas fa-circle" style="color:orange ;"></i> <span class="me-1 fw-bold">Payment Status:</span>
+                                        @if (item.Payment_Status == "Paid")
+                                        {
+                                            <span class="badge badge-success   text-black fw-bold">
+                                                Paid
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-warning   text-black fw-bold">
+                                                Pending
+                                            </span>
+                                        }
+                                    </li>
+                                }
+                                @*<li class="text-muted">
+                                        <i class="fas fa-circle" style="color:#84B0CA ;"></i> <span class="fw-bold">Order Status: </span>@Html.DisplayFor(modelItem => item.TblInvoice.Status)
+                                    </li>*@
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="row my-2 mx-1 justify-content-center">
+                        <table class="table table-striped table-borderless">
+                            <thead style="background-color:#fc832d ;" class="text-black-50">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Item</th>
+                                    <th scope="col">Qty</th>
+                                    <th scope="col">Unit Price</th>
+
+                                    @if (item.Extras == "None")
+                                    {
+                                        <th scope="col">Total</th>
+                                    }
+                                    else
+                                    {
+                                        <th scope="col">Extras </th>
+                                        <th scope="col">Extras Cost </th>
+
+                                        <th scope="col">Total</th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int rowIndex = 0; rowIndex < item.ExtraInfo.Count; rowIndex++)
+                                {
+                                    var info = item.ExtraInfo[rowIndex];
+                                    <tr>
+                                        <th scope="row">@{ var rowNumber = rowIndex + 1; @rowNumber }</th>
+                                        <td>@info.Item </td>
+                                        <td> @info.Qty</td>
+                                        <td>R @info.Unit.00 </td>
+
+                                        @if (item.Extras == "None")
+                                        {
+                                            <td>R @info.Amount.00 </td>
+                                        }
+                                        else
+                                        {
+                                            <td>@info.Extras</td>
+                                            <td>R @info.ExtrasCost</td>
+                                            <td>R @info.Amount.00 </td>
+                                        }
+                                    </tr>
+                                    {
+
+                                        grandTotal += (double)info.Amount;
+                                    }
+                                }
+
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-xl-8">
+                            @if (item.Method == "Delivery")
+                            {
+                                <ul class="list-unstyled " style="font-size: 20px;">
+                                    <li class="text-muted ms-3"><span class="text-black me-4">Sub-Total &ensp;&ensp;&ensp;&ensp;&ensp;</span>R @grandTotal.00</li>
+                                    <li class="text-muted ms-3 mt-2"><span class="text-black me-4">Delivery Fee&ensp;&ensp;&ensp;</span> R 50.00</li>
+                                </ul>
+                                {
+                                    finalTotal = grandTotal + 50;
+                                }
+                                <p class="text-black float-start">
+                                    <span class="text-black me-3" style="font-size: 20px;"> Total Amount &ensp; </span><span style="font-size: 20px;">R @finalTotal.00</span>
+                                </p>
+                            }
+                            else
+                            {
+                                <p class="text-black float-start">
+                                    <span class="text-black me-3" style="font-size: 20px;"> Total Amount  &ensp;</span><span style="font-size: 20px;">R @grandTotal.00</span>
+                                </p>
+                            }
+
+
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-xl-10">
+                            <p>Thank you for your order.</p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+}

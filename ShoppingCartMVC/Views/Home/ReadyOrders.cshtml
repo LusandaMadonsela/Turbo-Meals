@@ -1,0 +1,79 @@
+﻿@model List<ShoppingCartMVC.Models.tblInStoreOrder>
+<head>
+    <title>Ready Orders</title>
+    <style>
+        
+       .btn-primary {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<br />
+<h1>Ready Orders</h1>
+
+
+<div class="form-group">
+    <input type="text" class="form-control col-lg-4 ml-auto" placeholder="Search Here" id="searchBox" />
+</div>
+<table class="table">
+    <tr>
+        <th>
+            Order Num
+        </th>
+        <th>
+            Order Date
+        </th>
+        <th>
+            Order Detail
+        </th>
+        <th>
+            Order Status + Table Number
+        </th>
+        <th>
+            Method
+        </th>
+    </tr>
+
+    @{
+        string previousOrderNumber = null;
+    }
+
+    @foreach (var order in Model.OrderBy(o => o.OrderNumber))
+    {
+        if (order.OrderNumber != previousOrderNumber)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(m => order.OrderNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => order.OrderDateTime)
+                </td>
+                <td>
+                    <a href="@Url.Action("PrepInStoreOrder", "Home", new { OrderId = order.OrderId })" class="btn btn-primary">Order Details</a>
+                </td>
+                <td>
+                    @if (order.Status == "Ready")
+                    {
+                        <span>@order.Status</span>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(order.TableNumber))
+                    {
+                        <span class="additional-status">@order.TableNumber</span>
+                    }
+                </td>
+                <td>
+                    <button class="btn btn-primary">@Html.DisplayFor(m => order.Method)</button>
+
+                </td>
+            </tr>
+        }
+
+        previousOrderNumber = order.OrderNumber;
+    }
+</table>

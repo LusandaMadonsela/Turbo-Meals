@@ -1,0 +1,113 @@
+﻿@model ShoppingCartMVC.Models.tblSupplier
+
+<head>
+    <title> Supplier Details</title>
+    <style>
+        .card {
+            border: 2px solid grey;
+        }
+
+        .form-group {
+            text-align: center;
+        }
+
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 2fr); /* Adjust the number of columns as needed */
+            gap: 10px; /* Adjust the gap between checkboxes */
+        }
+
+        .orange-link {
+            color: orange;
+            font-size: 25px !important; /* Increase the font size to your desired value */
+            font-weight: bold; /* Make the text bold */
+            text-decoration: none; /* Remove the underline (if needed) */
+        }
+
+            .orange-link:hover {
+                color: orangered;
+            }
+
+        a {
+            color: orange;
+            font-size: 25px !important; /* Increase the font size to your desired value */
+            font-weight: bold; /* Make the text bold */
+            text-decoration: none;
+        }
+    </style>
+</head>
+<br />
+
+<h1 class="card-title" style="text-align:center"><u> Supplier Details</u></h1>
+<div class="col-sm-7 mx-auto">
+    <div class="card">
+        <div class="card-body">
+            <dd>
+                
+                <dl class="dl-horizontal">
+                    <dt>
+                        <span style="display: inline-block; color: cadetblue;">Supplier Name:</span>
+                        @Html.DisplayFor(model => model.SupplName)
+                    </dt>
+
+                    <dd>
+                        <span style="display: inline-block; color: cadetblue;"> <b>Supplier Type: </b></span>
+                        &ensp; @Html.DisplayFor(model => model.SupplType)
+                    </dd>
+
+                    <dt>
+                        <span style="display: inline-block; color: cadetblue;">Contact Person:</span>
+                        &ensp; @Html.DisplayFor(model => model.ContactPerson)
+                    </dt>
+
+                    <dd>
+                        <span style="display: inline-block; color: cadetblue;"> <b>Contact Person Position: </b></span>
+                        @Html.DisplayFor(model => model.ContactPersonPos)
+                    </dd>
+                    <dd>
+                        <span style="display: inline-block; color: cadetblue;"> <b>Contact Number: </b></span>
+                        &ensp;  @Html.DisplayFor(model => model.ContactNum)
+                    </dd>
+                    <dd>
+                        <span style="display: inline-block; color: cadetblue;"> <b>Email: </b></span>
+                        &ensp;  @Html.DisplayFor(model => model.Email)
+                    </dd>
+                    <dd>
+                        <span style="display: inline-block; color: cadetblue;"> <b>Telephone: </b></span>
+                        &ensp;  @Html.DisplayFor(model => model.Tel)
+                    </dd>
+                    <dd>
+                        <span style="display: inline-block; color: cadetblue;"> <b> Company Registration Number: </b></span>
+                        &ensp; @Html.DisplayFor(model => model.CompanyRegNum)
+                    </dd>
+                    <dd>
+                        <span style="display: inline-block; color: cadetblue;"> <b>Physical Address: </b></span>
+                        &ensp;  @Html.DisplayFor(model => model.PhysicalAddress)
+                    </dd>
+                    <dd>
+                        <span style="display: inline-block; color: cadetblue;"> <b>Active: </b></span>
+                        &ensp;  @Html.DisplayFor(model => model.Active)
+                    </dd>
+                    <hr />
+                    <dd>
+                        <h4 style="text-align:center">Ingredients being Supplied:</h4>
+                        @foreach (var ingredientName in ViewBag.SelectedIngredientNames)
+                        {
+                            <p>@ingredientName</p>
+                        }
+                    </dd>
+                </dl>
+
+                <p style="text-align:center">
+
+                    @*<a href="@Url.Action("Index", "AdminHome",new {id=Model.SupplierId})">Order Ingredients</a>|*@
+                    @Html.ActionLink("Edit", "Edit", new { id = Model.SupplierId },new { @class = "orange-link" }) |
+                    @Html.ActionLink("Back to List", "Index", null, new { @class = "orange-link" })
+                </p>
+        </div>
+    </div>
+</div>
+
+<br />
+<br />
+<br />

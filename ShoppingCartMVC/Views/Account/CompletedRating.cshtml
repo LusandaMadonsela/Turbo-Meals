@@ -1,0 +1,69 @@
+﻿<style>
+    h1 {
+        text-align: center;
+        color: black !important;
+    }
+
+    hr.new1 {
+        border: 10px solid black;
+        border-radius: 5px;
+    }
+
+    .card {
+        border: 3px solid grey;
+    }
+
+    .card-body {
+        text-align: center;
+    }
+
+    .form-group {
+        display: flex !important;
+        flex-direction: column !important;
+        font-size: 23px;
+    }
+
+    .textReset {
+        align-self: flex-start !important;
+    }
+
+    .text-danger {
+        color: orangered !important;
+        font-size: 20px;
+    }
+
+    .custom-orange-button {
+        background-color: orange; /* Set your desired shade of orange */
+        color: white; /* Set the text color to contrast with the background */
+        font-size: 20px; /* Set the font size to your preference */
+        font-weight: bold; /* Make the text bold if desired */
+        border: none;
+    }
+
+        .custom-orange-button:hover {
+            background-color: darkorange;
+            color: white;
+        }
+</style>
+<br />
+<div class="card mx-auto" style="max-width: fit-content;">
+    <div class="row no-gutters">
+        <div class="col-md-6">
+            <div class="card-body">
+                <h1 class="card-title">Rating Completed Successfully!</h1>
+                <br />
+                <h3 class="card-text"> Thank You For Your Feedback.</h3>
+                <br />
+                <p class="card-text">Please <b> @Html.ActionLink("Click Here", "Index", "Home")</b>  to return back to Turbo Meals Home.  </p>
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <br />
+            <img src="~/Images/completedRating.jpeg" class="card-img" alt="..." />
+        </div>
+    </div>
+</div>
+<br />
+<br />
+

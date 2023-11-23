@@ -1,0 +1,73 @@
+﻿@model IEnumerable<ShoppingCartMVC.Models.Drivers>
+   <head>
+       <title>Driver's Delivery Orders</title>
+   </head>
+<style>
+    .btn-info {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+
+    .btn-success {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .btn-warning {
+        font-size: 20px;
+        font-weight: bold;
+    }
+    h1 {
+        text-align: center;
+    }
+</style>
+<br />
+<h1>Delivery Orders</h1>
+<br />
+<table class="table">
+    <tr>
+        <th> ID</th>
+        <th>Customer Name</th>
+        <th>Delivery Address</th>
+        <th>Order Date</th>
+        <th>Delivery Process</th>
+        <th>Delivery Status</th>
+    </tr>
+
+    @foreach (var order in Model)
+    {
+        if (order != null)
+        {
+            <tr>
+                <td>@Html.DisplayFor(m => order.TblOrder.InvoiceId)</td>
+                <td>@Html.DisplayFor(m => order.TblOrder.TblInvoice.TblUser.Name)</td>
+                <td>@Html.DisplayFor(m => order.DeliveryAddress)</td>
+                <td>@Html.DisplayFor(m => order.OrderDate)</td>
+                <td>
+                    @if (order.TblOrder.TblInvoice.Status == "Out for Delivery")
+                    {
+                        <a href="@Url.Action("DriverGetOrder", "Home", new { InvoiceID = order.TblOrder.InvoiceId })" class="btn btn-info">Start</a>
+                    }
+                    else if (order.TblOrder.TblInvoice.Status == "Order Delivered")
+                    {
+                        <a href="@Url.Action("DeliveryDetails", "Home", new { InvoiceID = order.TblOrder.InvoiceId })" class="btn btn-success">Completed</a>
+                    }
+                </td>
+                <td>
+                    @if (order.TblOrder.TblInvoice.Status == "Out for Delivery")
+                    {
+                        <span class="btn btn-warning">Delivery Pending</span>
+                    }
+                    else if (order.TblOrder.TblInvoice.Status == "Order Delivered")
+                    {
+                        <span class="btn btn-success">Delivered</span>
+                    }
+                </td>
+            </tr>
+        }
+
+    }
+</table>
+<br />
+<br />

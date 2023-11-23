@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, shrink-to-fit=no" />
+    <title> Turbo Deals</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" />
+
+    <link rel="stylesheet" href="~/css/SlideshowStyle.css" />
+
+    
+    <style>
+        h1{
+            text-align:center;
+            font-weight:bold;
+        }
+        .text-uppercase {
+            color: white;
+        }
+
+        .fw-bolder {
+            color: white;
+        }
+
+        .carousel-inner{overflow:visible;}
+
+            .carousel-inner > .td-item {
+                -webkit-transition: 0s !important;
+                -o-transition: 0s !important;
+                /*transition:0s !important;*/
+            }
+
+        .footer {
+            display: none;
+        }
+
+        /* Reduce the width of the slideshow container */
+        #deals-carousel {
+            max-width: 1200px !important; /* You can adjust this value */
+            margin: auto;
+        }
+
+        .carousel-item {
+            height: 700px; /* Adjust the height as needed */
+        }
+
+        .td-img {
+            height: 100%; /* Ensure the image fills the carousel item */
+            object-fit: cover; /* Maintain the image aspect ratio */
+        }
+        </style>
+    
+</head>
+
+<body>
+    <br />
+    <h1> Check out These Deals On Our Menu</h1>
+    <br />
+    <div id="deals-carousel" class="carousel slide" data-bs-ride="carousel">
+
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#deals-carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#deals-carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#deals-carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#deals-carousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+
+        </div>
+
+        <div class="carousel-inner">
+            <div class="carousel-item active td-item">
+                <img src="~/Images/b.jpg" class="d-block w-100 td-img" alt="Slide 1">
+
+                <div class="carousel-caption top-0 d-none d-md-block">
+
+                    <h2 class="fs-3 text-uppercase">Double Chicken Burger + Chips</h2>
+                    <h1 class="fw-bolder">R75.00</h1>
+                 
+
+                </div>
+
+            </div>
+
+            <div class="carousel-item td-item">
+                <img src="~/Images/bd.jpg" class="d-block w-100 td-img" alt="Slide 2">
+
+                <div class="carousel-caption top-0 d-none d-md-block">
+
+                    <h2 class="fs-3 text-uppercase">Chicken Burger + Chips + Coke</h2>
+                    <h1 class="fw-bolder">R80.00</h1>
+
+                    
+                </div>
+
+            </div>
+
+            <div class="carousel-item td-item">
+                <img src="~/Images/nando-s-perinaise-burger.jpg" class="d-block w-100 td-img" alt="Slide 3">
+
+                <div class="carousel-caption top-0 d-none d-md-block">
+                    <h2 class="fs-3 text-uppercase fw-bold">Turbo Wrap Deal</h2>
+                    <h3 class="fs-3 text-uppercase">(Chicken Burger + Pita + Wrap + Chips)</h3>
+                    <h1 class="fw-bolder">R130.00</h1>
+                   
+                </div>
+
+            </div>
+
+            <div class="carousel-item td-item">
+                <img src="~/Images/p.jpg" class="d-block w-100 td-img" alt="Slide 4">
+
+                <div class="carousel-caption top-0 d-none d-md-block">
+                    <h2 class="fs-3 text-uppercase">Chicken Burger + Pita + Wrap</h2>
+                    <h1 class="fw-bolder">R115.00</h1>
+                   
+                </div>
+
+            </div>
+
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#deals-carousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#deals-carousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+
+    </div>
+
+</body>
+</html>
+<br />

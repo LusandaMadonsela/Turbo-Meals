@@ -1,0 +1,35 @@
+﻿@model List<ShoppingCartMVC.Models.tblReservation>
+<style>
+    .card {
+        border: 3px solid #04d47a;
+    }
+</style>
+@{
+    ViewBag.Title = "Reserve Success";
+}
+<br />
+<div class="card mx-auto" style="max-width: fit-content;">
+    <div class="row no-gutters">
+        <div class="col-md-6">
+            <div class="card-body">
+                <br />
+                <br />
+                <h1 class="card-title">Reservation made successfully!</h1>
+                <p class="card-text">
+                    <br />
+                    <br />
+                    Your reservation was made successfully.Please check your reservation confirmation email for your details that have been processed...
+                    Please <b> @Html.ActionLink("Click Here", "Index", "Home")</b>to return back to the home page
+                </p>
+
+                @if (!string.IsNullOrEmpty(Request.QueryString["bookingId"]))
+                {
+                    <p>Your Booking ID:&ensp; @Request.QueryString["bookingId"]</p>
+                }
+            </div>
+        </div>
+        <div class="col-md-5">
+            <img src="~/Images/res.jpg" class="card-img" alt="..." />
+        </div>
+    </div>
+</div>

@@ -1,0 +1,235 @@
+﻿
+@{
+    Layout = null;
+}
+@model ShoppingCartMVC.Models.Drivers
+<head>
+    <title> Delivery Address</title>
+    <style>
+        table {
+            border-collapse: separate;
+            border-spacing: 50px 0;
+        }
+
+        .delMap {
+            border: 2px solid;
+        }
+
+
+        .card {
+            border: 3px solid grey;
+        }
+
+        .nextPage {
+            border-width: 3px;
+            border-style: solid;
+            border-color: orange;
+            padding: 0.3em;
+            background-color: orange;
+            color: white;
+           
+            font-size: 20px !important; /* Increase the font size to your desired value */
+            font-weight: bold !important; /* Make the text bold */
+            text-decoration: none;
+        }
+
+            .nextPage:hover {
+                background-color: darkorange;
+                color: white;
+            }
+        
+
+        input[type=button] {
+           /* background-color: #50bfff;
+            color: white;*/
+            padding: 0.5em;
+            border: none;
+        }
+
+        .custom-orange-button {
+            background-color: orange; /* Set your desired shade of orange */
+            color: white; /* Set the text color to contrast with the background */
+            font-size: 20px; /* Set the font size to your preference */
+            font-weight: bold; /* Make the text bold if desired */
+            border: none;
+        }
+
+            .custom-orange-button:hover {
+                background-color: darkorange;
+                color: white;
+            }
+        .map-container {
+            width: 50%; /* Adjust the width as needed */
+            
+        }
+
+        .direction-container {
+            width: 50%; /* Adjust the width as needed */
+            
+            margin-left: 20px;
+        }
+
+        .container {
+            max-width: 1300px; /* Set a max-width for the container */
+            margin: 0 auto; /* Center the container horizontally */
+            padding: 10px; /* Add some padding for spacing */
+        }
+
+        /* Make the card content responsive */
+        .card-content {
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<br />
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-content">
+                <h1 style="text-align:center"> <u><i>Order No : <b>#@Html.DisplayFor(m => Model.OrderId)  </b></i> <br /> </u> <br /></h1>
+                <h2 class="card-description" style="text-align:center">
+
+                    &ensp;&ensp;&ensp; Source Address : &ensp;165 Bayview Rd, Wentworth, Bluff, 4052
+                    <br />
+                    <br />
+                    Delivery Address :  @Html.DisplayFor(m => Model.DeliveryAddress)
+                </h2>
+
+                <br />
+                <br />
+                <table border="0" cellpadding="0" cellspacing="3">
+                    <tr>
+                        <td colspan="2">
+                            @*Source:
+                        <input type="text" id="txtSource" placeholder="Enter Source...." size="35" />
+                        &nbsp; Destination:
+
+                        <input type="text" id="txtDestination" placeholder="Enter Destination...." size="35" />
+                        <br />*@
+                            <br />
+                            <input type="button" value="Get Route" onclick="GetRoute()" class="btn custom-orange-button py-3 px-5" /> &ensp; <a href="@Url.Action("SendMail","Home", new { InvoiceId = Model.TblOrder.InvoiceId })" class="nextPage"> Notify Customer</a>
+                            <br />
+                            <br />
+
+                            <hr />
+                            <h1 class="card-title" style="text-align:center">Directions</h1>
+
+
+                            <br />
+                            <br />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div id="dvDistance">
+                            </div>
+                            <br />
+                            <br />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="map-container">
+                            <div id="dvMap" style="width: 500px; height: 500px" class="delMap">
+                            </div>
+                        </td>
+                        &ensp;&ensp;&ensp;
+                        <td class="direction-container">
+                            <div id="dvPanel" style="width: 500px; height: 500px" class="delDirections">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+               
+
+            </div>
+        </div> 
+  </div>
+
+
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=places&key=AIzaSyB773I-Y0cPyWYQTj7U07KYxm8Kj954vCY"></script>
+    @*<script src="https://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyB773I-Y0cPyWYQTj7U07KYxm8Kj954vCY"></script>*@
+
+    @*@section Scripts
+        {
+            <script>
+                $(document).ready(function () {*@
+
+    @*});
+        </script>*@
+    <script type="text/javascript">
+    var source, destination;
+        var directionsDisplay;
+        var directionsService = new google.maps.DirectionsService();
+        google.maps.event.addDomListener(window, 'load', function () {
+           /*new google.maps. places.SearchBox(document.getElementById('txtSource'));*/
+            /*new google.maps.places.SearchBox(document.getElementById('txtDestination'));*/
+            directionsDisplay = new google.maps.DirectionsRenderer({ 'draggable': true });
+        });
+
+        function GetRoute() {
+            var durban = new google.maps.LatLng(-29.918138320337697, 30.999815627839574);
+            var mapOptions = {
+                zoom: 15,
+                center: durban
+            };
+            map = new google.maps.Map(document.getElementById('dvMap'), mapOptions);
+            directionsDisplay.setMap(map);
+            directionsDisplay.setPanel(document.getElementById('dvPanel'));
+
+            var source = '165 Bayview Rd, Wentworth, Bluff, 4052';
+
+
+            //*********DIRECTIONS AND ROUTE**********************//
+           /* source = document.getElementById("txtSource").value;*/
+            destination = '@Model.DeliveryAddress'; /*document.getElementById("txtDestination").value;*/
+
+            var request = {
+                origin: source,
+                destination: destination,
+                travelMode: google.maps.TravelMode.DRIVING
+            };
+            directionsService.route(request, function (response, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                    directionsDisplay.setDirections(response);
+                }
+            });
+
+            //*********DISTANCE AND DURATION**********************//
+            var service = new google.maps.DistanceMatrixService();
+            service.getDistanceMatrix({
+                origins: [source],
+                destinations: [destination],
+                travelMode: google.maps.TravelMode.DRIVING,
+                unitSystem: google.maps.UnitSystem.METRIC,
+                avoidHighways: false,
+                avoidTolls: false
+            }, function (response, status) {
+                if (status == google.maps.DistanceMatrixStatus.OK && response.rows[0].elements[0].status != "ZERO_RESULTS") {
+                    var distance = response.rows[0].elements[0].distance.text;
+                    var duration = response.rows[0].elements[0].duration.text;
+                    var dvDistance = document.getElementById("dvDistance");
+                    dvDistance.innerHTML = "";
+                    dvDistance.innerHTML += "<h3>"+"Distance: " + distance +"</h3>";
+                    dvDistance.innerHTML += "<h3>" + "Duration: " + duration + "</h3>";
+
+                }
+                else {
+                    alert("Unable to find the distance via road.");
+                }
+            });
+
+           /* google.maps.event.addDomListener(window, 'load', GetRoute);*/
+        }</script>
+
+</body>

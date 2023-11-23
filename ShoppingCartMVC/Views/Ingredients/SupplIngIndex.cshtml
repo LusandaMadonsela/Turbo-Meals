@@ -1,0 +1,66 @@
+﻿@model IEnumerable<ShoppingCartMVC.Models.SupplierIngredients>
+
+<head>
+    <title>
+        Supplier and Ingredients
+    </title>
+    <style>
+        .btn-info {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        h1{
+            text-align:center;
+        }
+    </style>
+</head>
+<script src="~/js/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#searchBox").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+<br />
+<div class="container">
+    <h1> Supplier for Each Ingredient and Unit Costs</h1>
+    <div class="form-group">
+        <input type="text" class="form-control col-lg-4 ml-auto" placeholder="Search Here" id="searchBox" />
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                @*<th>ID</th>*@
+                <th>Supplier</th>
+                <th>Ingredient</th>
+                <th>Unit Cost</th>
+                <th>Update Unit Cost</th>
+            </tr>
+        </thead>
+        <tbody id="myTable">
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>@item.TblSupplier.SupplName</td>
+                    <td>@item.TblIngredients.Ing_Name</td>
+                    <td>R @item.Ing_UnitCost .00</td>
+                    <td>
+                        <a href="@Url.Action("UpdateUnitCost", "Ingredients", new { ingId = item.Ing_ID,supplierID=item.SupplierId})" class="btn btn-info">Edit</a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+</div>
+<br />
+<br />

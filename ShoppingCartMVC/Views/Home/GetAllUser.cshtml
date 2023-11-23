@@ -1,0 +1,64 @@
+﻿@model IEnumerable<ShoppingCartMVC.Models.AccountPoints>
+<head>
+    <title>Turbo Meals Users</title>
+</head>
+<br />
+<br />
+<br />
+<br />
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.Password)
+            </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.RoleType)
+        </th>
+        <th>
+            Account Points
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.Password)
+        </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.RoleType)
+            </td>
+            @if (item.RoleType != 2)
+            {
+                <td>
+                    -
+                </td>
+            }
+
+            @if (item.RoleType == 2)
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.PointBalance)
+                </td>
+            }
+
+        </tr>
+    }
+
+</table>
+<br />
+<br />
+<br />
+<br />

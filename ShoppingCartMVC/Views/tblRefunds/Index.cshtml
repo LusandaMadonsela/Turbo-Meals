@@ -1,0 +1,83 @@
+﻿@model IEnumerable<ShoppingCartMVC.Models.tblRefund>
+
+<head>
+    <title>All Refund Request</title>
+    <style>
+        h1{
+            text-align:center;
+        }
+
+        .btn-success {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .btn-info {
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<br />
+<h1> All Refunds</h1>
+<br />
+<table class="table">
+    <tr>
+        <th>
+            Order ID
+        </th>
+        <th>
+           Email
+        </th>
+        <th>
+            Request Date
+        </th>
+        <th>
+           Refund Reason
+        </th>
+        <th>
+            Image Proof
+        </th>
+        <th>
+            Refund Status
+        </th>
+        <th>Action</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            #@Html.DisplayFor(modelItem => item.OrderId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmailID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RefundRequestDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RefundReason)
+        </td>
+        <td>
+            <img src="~/Uploads/@item.Image" style="width:150px; height:100px;" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RefundStatus)
+        </td>
+        <td>
+            @if (item.RefundStatus == "Refund Requested")
+            {
+                <a href="@Url.Action("Edit","tblRefunds",new { id = item.RefundId })" class="btn btn-info">Reply</a>
+            }
+            else
+                {
+                    <span class="btn btn-success">Complete</span>
+                }
+
+        </td>
+    </tr>
+}
+
+</table>
+<br />

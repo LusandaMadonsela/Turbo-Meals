@@ -1,0 +1,71 @@
+﻿@model List<ShoppingCartMVC.Models.tblOrder>
+
+<head>
+    <title>Online Orders Placed</title>
+    <style>
+        .btn-success {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        h1{
+            text-align:center;
+        }
+    </style>
+</head>
+<br />
+<br />
+<h1>Online Orders Being Prepared</h1>
+<br />
+@foreach (var orderGroup in Model.GroupBy(o => o.InvoiceId))
+{
+
+    <table class="table">
+        <tr>
+            <th>
+                Order Num
+            </th>
+            <th>
+                Product Name
+            </th>
+            <th>
+                Qty
+            </th>
+            <th>
+                Action
+            </th>
+            @*<th></th>*@
+        </tr>
+
+        @foreach (var order in orderGroup)
+        {
+            <tr>
+                @if (order == orderGroup.First())
+                {
+                    <td rowspan="@orderGroup.Count()">@order.InvoiceId</td>
+                }
+                <td>
+                    @Html.DisplayFor(m => order.TblProduct.P_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => order.Qty)
+                </td>
+                <td>
+                    @if (order.OrderReady == "Being Prepared" && order == orderGroup.First())
+                    {
+                        using (Html.BeginForm("PrepOrder", "Home", FormMethod.Post))
+                        {
+                            @Html.Hidden("InvoiceId", order.InvoiceId)
+                            <button type="submit" class="btn btn-success">Order Ready</button>
+                        }
+
+                    }
+                </td>
+                
+            </tr>
+        }
+
+    </table>
+    <br />
+}
+<br />
+<br />

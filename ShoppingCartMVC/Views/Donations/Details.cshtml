@@ -1,0 +1,67 @@
+﻿@model ShoppingCartMVC.Models.tblDonations
+<head>
+    <title>
+        Donation Details
+    </title>
+    <style>
+        .card {
+            border: 2px solid grey;
+            text-align:center
+        }
+
+        h1 {
+            text-align: center;
+            background-color: rgb(255, 106, 0);
+            color: #fff;
+            margin: 0;
+            padding: 15px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .orange-link {
+            font-size: 20px;
+            font-weight: bold;
+         
+        }
+    </style>
+</head>
+@{
+    ViewBag.Title = "Details";
+}
+
+<h1 style="text-align:center" >Donation Details</h1>
+<br />
+<div class="col-md-6 mx-auto">
+    <hr />
+    <div class="card mx-auto">
+
+
+        <dl class="dl-v">
+            <dt>
+                Oraginzation Donated Too:
+            </dt>
+
+            <dd>@Html.DisplayFor(model => model.DonCharityOrg)</dd>
+
+            <dt>
+                Donator's Email:
+            </dt>
+
+            <dd> @Html.DisplayFor(model => model.DonEmail) </dd>
+
+            <dt>
+                Donation Amount:
+            </dt>
+
+            <dd>R @Html.DisplayFor(model => model.DonationAmount) </dd>
+
+        </dl>
+        <p>
+            @Html.ActionLink("Back to List", "DonationDetails", null, new { @class = "orange-link" })
+        </p>
+    </div>
+</div>
+
+<br />
+<br />

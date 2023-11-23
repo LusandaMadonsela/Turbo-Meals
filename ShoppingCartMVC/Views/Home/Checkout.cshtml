@@ -1,0 +1,249 @@
+﻿@*showing cart item with conditions*@
+
+<head>
+    <title>Checkout</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        .card {
+            border: 1px solid;
+        }
+
+        .thead {
+            background-color: #fc872fef;
+        }
+
+        .text-center {
+            color: black;
+        }
+        .custom-orange-button {
+            background-color: orange; /* Set your desired shade of orange */
+            color: white; /* Set the text color to contrast with the background */
+            font-size: 20px; /* Set the font size to your preference */
+            font-weight: bold; /* Make the text bold if desired */
+            border: none;
+        }
+
+            .custom-orange-button:hover {
+                background-color: darkorange;
+                color: white;
+            }
+
+            .text-center{
+                color:white;
+            }
+            
+    </style>
+</head>
+<br />
+<div class="container">
+    @if (TempData["total"] == null)
+    {
+        <h1>cart is empty</h1>
+        <a href="@Url.Action("Index","Home")">Go Back</a>
+    }
+    else
+    {
+
+        <div class="row">
+            <br />
+            <div class="col-md-12 ftco-animate fadeInUp ftco-animated">
+                <div class="cart-list">
+                    <h3>Total Item : @TempData["item_count"]</h3>
+                    <table class="table">
+                        <thead class="thead">
+                            <tr class="text-center">
+
+                                <th></th>
+
+                                <th>Item</th>
+                                <th>Price</th>
+                                <th>Qty</th>
+                                <th>Extras</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in TempData["cart"] as List<ShoppingCartMVC.Models.Cart>)
+                            {
+
+
+                                <tr class="text-center">
+                                    <td class="product-remove"><a href="@Url.Action("remove", "Home", new { id = item.proid })"><span class="fa fa-remove fa-1x"></span></a></td>
+
+                                    <td class="product-name">
+                                        @item.proname
+
+                                    </td>
+
+                                    <td class="price">R @item.price</td>
+
+                                    <td class="quantity">
+                                        @item.qty
+                                    </td>
+
+                                    <td class="ex">
+                                        @item.extras
+                                    </td>
+                                    <td class="exC">
+                                        R @item.extrasCost
+                                    </td>
+
+                                    <td class="total">R @item.bill.00</td>
+                                </tr><!-- END TR-->
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row justify-content-end">
+            <div class="col-lg-4 mt-5 cart-wrap ftco-animate fadeInUp ftco-animated">
+                <div class="cart-total mb-3">
+                    Cart Total
+                    <hr>
+                    <p class="d-flex total-price">
+                        <span class="total">Total</span>
+                        <span id="totalValue">R @TempData["total"].00</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    }
+
+
+    @*show checkout button as per user rights*@
+
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <a href="@Url.Action("Login","Account")" class="btn btn-primary py-3 px-4"><span class="fa fa-sign-in"></span> Login</a>
+        <a href="@Url.Action("Register","Account")" class="btn btn-primary py-3 px-4"><span class="fa fa-registered"></span> Register</a>
+    }
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        if (User.IsInRole("2"))
+        {
+
+            if (TempData["cart"] != null)
+            {
+                using (Html.BeginForm())
+                {
+
+                    <span>Contact :</span> <input type="text" name="contact" class="form-control col-lg-6" required maxlength="10" />
+                    <br />
+                    <span>Address :</span><textarea name="address" class="form-control col-lg-6" required></textarea>
+                    <br />
+
+                    if (Convert.ToInt16(TempData["total"]) * 0.5 <= Convert.ToInt16(TempData["points"]))
+                    {
+                        <span> 50% Points Discount :</span>
+                        <div class="col-sm-3">
+                            <input type="radio" name="RedeemPoints" value="Yes" /><label>&ensp;Yes</label>
+                            <br />
+                            <input type="radio" name="RedeemPoints" value="No" /><label>&ensp;No</label>
+                        </div>
+                    }
+
+
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Delivery Method :</h5>
+
+
+                                    <input type="radio" name="Method" value="Delivery" title="Standard Delivery Fee of R50" /><label>&ensp;Delivery</label>
+                                    <br />
+                                    <div id="deliveryFeeMessage" style="display: none; color: orangered;">
+                                        Standard delivery fee of R30 will be added.
+                                    </div>
+                                    <br />
+                                    <input type="radio" name="Method" value="Collection" /><label>&ensp;Collection</label>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Payment Method:</h5>
+
+                                    <input type="radio" name="PayMethod" value="PayPal" /><label>&ensp;PayPal</label>
+                                    <br />
+                                    <input type="radio" name="PayMethod" value="Cash" /><label>&ensp;Cash On Delivery/Collection</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <br />
+                    <input type="submit" value="Checkout" class="btn custom-orange-button py-3 px-5" />
+                    <a href="@Url.Action("ReserveOrder", "Home")" class="btn custom-orange-button py-3 px-5">Reserve Order</a>
+                    <br />
+
+
+
+                }
+            }
+
+
+        }
+    }
+
+
+</div>
+<br />
+
+
+<script>
+$(document).ready(function () {
+    // Get references to elements
+    var deliveryRadioButton = $("input[name='Method'][value='Delivery']");
+    var collectionRadioButton = $("input[name='Method'][value='Collection']");
+    var deliveryFeeRow = $("#deliveryFeeRow");
+    var totalValue = $("#totalValue");
+    var deliveryFeeMessage = $("#deliveryFeeMessage"); // Get the delivery fee message element
+
+    // Calculate and store the original total on page load
+    var originalTotal = parseFloat("@TempData["total"]");
+
+    // Add event listeners to the radio buttons
+    deliveryRadioButton.on("change", function () {
+        if ($(this).is(":checked")) {
+            // Show the delivery fee row
+            deliveryFeeRow.show();
+            deliveryFeeMessage.show(); // Display the delivery fee message
+
+            // Calculate and update the new total with an additional R50
+            var newTotal = originalTotal + 30;
+
+            totalValue.text("R " + newTotal.toFixed(2));
+        }
+    });
+
+    collectionRadioButton.on("change", function () {
+        if ($(this).is(":checked")) {
+            // Hide the delivery fee row and the delivery fee message
+            deliveryFeeRow.hide();
+            deliveryFeeMessage.hide();
+
+            // Reset the total value to the original total
+            totalValue.text("R " + originalTotal.toFixed(2));
+        }
+    });
+});
+</script>
+
+
+
+

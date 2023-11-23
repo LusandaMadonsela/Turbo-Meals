@@ -1,0 +1,120 @@
+﻿@model List<ShoppingCartMVC.Models.tblInStoreOrder>
+
+@{
+    ViewBag.Title = "DineIn";
+}
+
+<h2>Dine-In Orders</h2>
+
+
+<a href="@Url.Action("POSDashboard", "Home")" class="success-button">Back to POS</a>
+
+<div class="form-group">
+    <input type="text" class="form-control col-lg-4 ml-auto" placeholder="Search Here" id="searchBox" />
+</div>
+
+@if (Model.Any())
+{
+    foreach (var orderGroup in Model.GroupBy(o => o.OrderNumber))
+    {
+        <h3>Order Number: @orderGroup.Key</h3>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>Method</th>
+                    <th>Pay Method</th>
+                    <th>Table Number</th>
+                    <th>ReservedTime</th>
+                    <th>ReserveDate</th>
+                    <th>Status</th> <!-- Added Status column -->
+                    <th>Generate Bill</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in orderGroup)
+                {
+                    <tr>
+                        <td>@order.ProductName</td>
+                        <td>@order.Method</td>
+                        <td>
+                            @if (string.IsNullOrWhiteSpace(order.PayMethod))
+                            {
+                                <span class="badge badge-warning">Pending</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-success">@order.PayMethod</span>
+                            }
+                        </td>
+                        <td>@order.TableNumber</td>
+                        <td>
+                            <button class="success-button">
+                                @(order.ReservedTime != null ? order.ReservedTime.Value.ToString("HH:mm") : string.Empty)
+                            </button>
+                        </td>
+                        <td>
+                            <button class="success-button">
+                                @(order.ReservedDate != null ? order.ReservedDate.Value.ToShortDateString() : string.Empty)
+                            </button>
+                        </td>
+                        <td>@order.Status</td> <!-- Display Status -->
+                        <td>
+                            @if (orderGroup.First() == order)
+                            {
+                                <a href="@Url.Action("GenerateBill", "Home", new { orderNumber = order.OrderNumber })" class="btn btn-primary">Generate Bill</a>
+                            }
+                            @if (orderGroup.First() == order)
+                            {
+                                <a href="@Url.Action("CompleteOrder", "Home", new { orderNumber = order.OrderNumber })" class="btn btn-success">Complete</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+else
+{
+    <p>No Dine-In orders found.</p>
+}
+
+
+@*<script>
+        function searchOrder() {
+            var orderNumber = document.getElementById("orderNumberInput").value;
+
+            // Perform a search using the order number (you can make an AJAX request to your server)
+            // Replace this with your actual search logic
+            if (orderNumber.trim() !== "") {
+                // Redirect or display the found order based on your application's requirements
+                window.location.href = "@Url.Action("SearchOrder", "Home")?orderNumber=" + orderNumber;
+            }
+        }
+    </script>*@
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
