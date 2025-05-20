@@ -24,28 +24,28 @@ There you will look up RoleType1@gmail.com and replace that email with the email
 
 **Also Remember to change the connection string in the webconfig file so that the data is stored in your database
 
-Step 2
+Step 2 - 
 Log in as RoleType 4 user you created and head to the ingredients tab and start adding different ingredients that make up what you want to sell. Eg, for a burger, youll have patties, tomatoes, lettuce, pickles and onions, the ingredients will depend on what type of burger you are selling. It does not have to be a burger it could be any food.
 After that, head over to the Supplier tab and create some suppliers. With each supplier you can choose which ingredients they supply from the ingredients you have already added previously.
 
-Step 3
+Step 3 - 
 Log in as RoleType1 (Admin) user you created and head to the Categories tab to add a category, e.g. burgers, drinks, schwamas etc… 
 After that move on to the Products tab and add a product and include the image of the product.
 
-Step 4
+Step 4 - 
 Log in as RoleType2(Customer) and add an item to the cart and proceed to checkout.
 After that you will log in to a sandbox paypal account to confirm you payment.
 Once that is done wait for your order to be confirmed.
 
-Step 5
+Step 5 - 
 Now log in as RoleType4(Kitchen) to confirm the order is ready. 
 Remember to order ingredients if you are low on an ingredient you should receive an email to notify you.
 Once the order is ready it will appear on the admin side RoleType1 automatically
 
-Step 6
+Step 6 - 
 Log in as  the admin RoleType1 and assign a driver to make the delivery. A list of drivers will be on the dropdown(RoleType3 we created at the beginning) select a driver to make the delivery.
 
-Step 7 
+Step 7 - 
 Now log in as the drive RoleType3 and you will see a list of orders assigned to the driver for delivery.
 Select the start button. From there you can notify the customer that you have the order and give them an estimate of your arrival. 
 The driver can also get a route to the address where they will make a delivery.
